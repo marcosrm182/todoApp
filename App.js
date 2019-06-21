@@ -8,7 +8,7 @@ export default class App extends Component {
     super();
     this.state= { 
       tareas: [],
-      texto: ""
+      texto: ''
     };
   }
 
@@ -17,10 +17,22 @@ export default class App extends Component {
     this.setState({ texto: value })
   }
 
+  agregarTarea = (tarea) => {
+    this.setState({
+      tareas: [...this.state.tareas, tarea],
+      texto: ''
+    });
+    console.log(this.state.tareas.length)
+  }
+
   render(){
     return (
       <View style={styles.container}>
-        <Header cambiarTexto={this.establecerTexto}/>
+        <Header
+          texto={this.state.texto}
+          cambiarTexto={this.establecerTexto}
+          agregar={this.agregarTarea}
+        />
         <Text>{this.state.texto}</Text>
         <Body/>
       </View>

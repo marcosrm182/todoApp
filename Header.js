@@ -16,6 +16,8 @@ class Header extends Component {
           style={styles.texto}
           onChangeText={ this.props.cambiarTexto }
           placeholder="Aquí escribe tu texto..."
+          onSubmitEditing={ this.props.agregar }
+          value={this.props.texto}
         />
       </View>
     );
