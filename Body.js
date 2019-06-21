@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, FlatList } from 'react-native';
 
 class Body extends Component {
   constructor(props) {
@@ -12,6 +12,12 @@ class Body extends Component {
     return (
         <View style={styles.container}>
         <Text> Body </Text>
+        <FlatList
+          data={this.props.tareas}
+          // renderItem={ (elemento) => {
+          //ES6 --> podemos sacar directamente el atributo item del objeto elemento
+          renderItem={ ({item}) => <Text>{item.texto}</Text> }
+        />
       </View>
     );
   }
@@ -20,9 +26,7 @@ class Body extends Component {
 const styles = StyleSheet.create({
     container: {
       flex: 9,
-      backgroundColor: '#98FB98',
-      alignItems: 'center',
-      justifyContent: 'center',
+      backgroundColor: '#98FB98'
     },
 });
 
