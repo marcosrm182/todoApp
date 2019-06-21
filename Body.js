@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, FlatList } from 'react-native';
+import Tarea from './Tarea';
 
 class Body extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class Body extends Component {
           data={this.props.tareas}
           // renderItem={ (elemento) => {
           //ES6 --> podemos sacar directamente el atributo item del objeto elemento
-          renderItem={ ({item}) => <Text>{item.texto}</Text> }
+          renderItem={ ({item}) => <Tarea item={item}/> }
         />
       </View>
     );

@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     texto: {
-      paddingHorizontal: 16
+      paddingHorizontal: 16,
+      fontSize: 24,
     }
 });
 
