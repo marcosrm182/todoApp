@@ -24,6 +24,16 @@ export default class App extends Component {
     });
   }
 
+  eliminarTarea = (id) => {
+    const nuevasTareas = this.state.tareas.filter((tarea) => {
+      return tarea.key !== id;
+    });
+    this.setState({
+      tareas: nuevasTareas,
+    })
+
+  }
+
   render(){
     return (
       <View style={styles.container}>
@@ -32,9 +42,9 @@ export default class App extends Component {
           cambiarTexto={this.establecerTexto}
           agregar={this.agregarTarea}
         />
-        <Text>{this.state.texto}</Text>
         <Body
-          tareas={ this.state.tareas }
+          tareas={this.state.tareas}
+          eliminar={this.eliminarTarea}
         />
       </View>
     );
