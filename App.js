@@ -34,7 +34,7 @@ export default class App extends Component {
   }
 
   guardarEnTelefono = () => {
-    AsyncStorage.setItem('@AppCursoUdemy:arrayUno', JSON.stringify([{key:1, texto:'uno'}, {key:2, texto:'dos'}]))
+    AsyncStorage.setItem('@AppCurso:arrayUno', JSON.stringify([{key:1, texto:'uno'}, {key:2, texto:'dos'}]))
       .then((valor) => {
         console.log(valor);
       })
@@ -44,8 +44,8 @@ export default class App extends Component {
   }
 
   recuperarEnTelefono = () => {
-    
-    AsyncStorage.getItem('@AppCursoUdemy:arrayUno')
+
+    AsyncStorage.getItem('@AppCurso:arrayUno')
       .then((valor) => {
         console.log(valor);
         console.log(JSON.parse(valor));
