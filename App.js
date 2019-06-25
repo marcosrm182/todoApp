@@ -8,7 +8,8 @@ export default class App extends Component {
     super();
     this.state= { 
       tareas: [],
-      texto: ''
+      texto: '',
+      cargando: true
     };
   }
 
@@ -54,6 +55,11 @@ export default class App extends Component {
       .then((valor) => {
         console.log(valor);
         console.log(JSON.parse(valor));
+        setTimeout(() => {
+          this.setState({
+            cargando: false,
+          });
+        }, 5000);
         if(valor !== null) {
           const nuevasTareas = JSON.parse(valor);
           this.setState({
@@ -63,6 +69,9 @@ export default class App extends Component {
       })
       .catch((error) => {
         console.log(error);
+        this.setState({
+          cargando: false,
+        });
       })
   }
 
@@ -77,6 +86,7 @@ export default class App extends Component {
         <Body
           tareas={this.state.tareas}
           eliminar={this.eliminarTarea}
+          cargando={this.state.cargando}
         />
       </View>
     );
