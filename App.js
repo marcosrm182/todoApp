@@ -8,8 +8,13 @@ export default class App extends Component {
     super();
     this.state= { 
       tareas: [],
-      texto: ''
+      texto: '',
+      cargando: true
     };
+  }
+
+  componentDidMount() {
+    this.recuperarEnTelefono();
   }
 
   establecerTexto = (value) => {
@@ -18,23 +23,24 @@ export default class App extends Component {
   }
 
   agregarTarea = () => {
+    const nuevasTareas = [...this.state.tareas, {texto: this.state.texto, key: Date.now().toString()}];
+    this.guardarEnTelefono(nuevasTareas);
     this.setState({
-      tareas: [...this.state.tareas, {texto: this.state.texto, key: Date.now().toString()}],
+      tareas: nuevasTareas,
       texto: ''
     });
   }
 
   eliminarTarea = (id) => {
-    const nuevasTareas = this.state.tareas.filter((tarea) => {
-      return tarea.key !== id;
-    });
+    const nuevasTareas = this.state.tareas.filter(tarea => tarea.key !== id);
+    this.guardarEnTelefono(nuevasTareas);
     this.setState({
       tareas: nuevasTareas,
     })
   }
 
-  guardarEnTelefono = () => {
-    AsyncStorage.setItem('@AppCurso:arrayUno', JSON.stringify([{key:1, texto:'uno'}, {key:2, texto:'dos'}]))
+  guardarEnTelefono = (tareas) => {
+    AsyncStorage.setItem('@AppCurso:tareas', JSON.stringify(tareas))
       .then((valor) => {
         console.log(valor);
       })
@@ -45,13 +51,27 @@ export default class App extends Component {
 
   recuperarEnTelefono = () => {
 
-    AsyncStorage.getItem('@AppCurso:arrayUno')
+    AsyncStorage.getItem('@AppCurso:tareas')
       .then((valor) => {
         console.log(valor);
         console.log(JSON.parse(valor));
+        setTimeout(() => {
+          this.setState({
+            cargando: false,
+          });
+        }, 5000);
+        if(valor !== null) {
+          const nuevasTareas = JSON.parse(valor);
+          this.setState({
+            tareas: nuevasTareas,
+          });
+        }
       })
       .catch((error) => {
         console.log(error);
+        this.setState({
+          cargando: false,
+        });
       })
   }
 
@@ -63,17 +83,10 @@ export default class App extends Component {
           cambiarTexto={this.establecerTexto}
           agregar={this.agregarTarea}
         />
-        <Button
-          title='guardar'
-          onPress={() => {this.guardarEnTelefono()}}
-        />
-        <Button
-          title='recuperar'
-          onPress={() => {this.recuperarEnTelefono()}}
-        />
         <Body
           tareas={this.state.tareas}
           eliminar={this.eliminarTarea}
+          cargando={this.state.cargando}
         />
       </View>
     );
